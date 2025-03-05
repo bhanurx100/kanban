@@ -39,7 +39,7 @@ function App() {
       <div className="App">
         {!user ? (
           <div className="landing">
-            <h1>Welcome to Kanban</h1><br /><br />
+            <h1>Welcome to Kanban</h1>
             <p>Sign up or log in with Google to continue</p>
             <GoogleLogin
               onSuccess={handleSuccess}
