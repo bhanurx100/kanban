@@ -23,3 +23,15 @@ body,
 .task > ::-webkit-scrollbar-thumb {
   @apply bg-sky-500 rounded-xl;
 }
+
+.landing {
+  @apply flex flex-col items-center justify-center min-h-screen;
+}
+
+.header {
+  @apply flex justify-between items-center p-4;
+}
+
+.signout-btn {
+  @apply bg-black text-white border border-gray-500 rounded-md p-2 hover:bg-gray-800;
+}
