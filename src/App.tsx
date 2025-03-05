@@ -57,7 +57,7 @@ function App() {
                 Sign Out
               </button>
             </div>
-            <KanbanBoard />
+            <KanbanBoard user={user} />
           </div>
         )}
       </div>

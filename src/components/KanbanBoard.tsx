@@ -1,5 +1,5 @@
 import { DndContext, DragStartEvent, DragEndEvent, DragOverEvent, useSensors, useSensor, PointerSensor, DragOverlay } from "@dnd-kit/core";
-import { useMemo, useState, useEffect } from "react"; // Added useEffect
+import { useMemo, useState, useEffect } from "react";
 import PlusIcon from "../icons/PlusIcon";
 import { Column, Id, Task } from "../types";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
@@ -7,23 +7,34 @@ import ColumnContainer from "./ColumnContainer";
 import { createPortal } from "react-dom";
 import TaskCard from "./TaskCard";
 
-function KanbanBoard() {
+interface UserInfo {
+  sub: string;
+  name: string;
+  email: string;
+  picture: string;
+}
+
+interface Props {
+  user: UserInfo; // Add user prop
+}
+
+function KanbanBoard({ user }: Props) {
   const [columns, setColumns] = useState<Column[]>(() => {
-    const savedColumns = localStorage.getItem('kanban-columns');
+    const savedColumns = localStorage.getItem(`kanban-columns-${user.sub}`);
     return savedColumns ? JSON.parse(savedColumns) : [];
   });
   const [tasks, setTasks] = useState<Task[]>(() => {
-    const savedTasks = localStorage.getItem('kanban-tasks');
+    const savedTasks = localStorage.getItem(`kanban-tasks-${user.sub}`);
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
 
   useEffect(() => {
-    localStorage.setItem('kanban-columns', JSON.stringify(columns));
-  }, [columns]);
+    localStorage.setItem(`kanban-columns-${user.sub}`, JSON.stringify(columns));
+  }, [columns, user.sub]);
 
   useEffect(() => {
-    localStorage.setItem('kanban-tasks', JSON.stringify(tasks));
-  }, [tasks]);
+    localStorage.setItem(`kanban-tasks-${user.sub}`, JSON.stringify(tasks));
+  }, [tasks, user.sub]);
 
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
@@ -37,9 +48,7 @@ function KanbanBoard() {
     })
   );
 
-  // Rest of your existing KanbanBoard code remains unchanged...
-  // (Omitted for brevity, include all functions like createTask, deleteTask, etc.)
-
+  // Rest of your KanbanBoard code remains unchanged...
   return (
     <div
       className="
